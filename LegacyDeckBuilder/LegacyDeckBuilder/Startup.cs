@@ -1,5 +1,6 @@
 using Amazon;
 using Amazon.Extensions.NETCore.Setup;
+using LegacyDeckBuilder.Models;
 using LegacyDeckBuilder.Repository;
 using LegacyDeckBuilder.Services;
 using Microsoft.AspNetCore.Builder;
@@ -19,8 +20,6 @@ namespace LegacyDeckBuilder
 
 		public IConfiguration Configuration { get; }
 
-		
-
 		/// <summary>
 		///		This method gets called by the runtime. Use this method to add services to the container.
 		/// </summary>
@@ -33,6 +32,7 @@ namespace LegacyDeckBuilder
 			services.AddSingleton<SetCatalogRepository>();
 
 			ConfigureAws(services);
+			ConfigureDb(services);
 		}
 
 		/// <summary>
@@ -67,6 +67,14 @@ namespace LegacyDeckBuilder
 					Region = RegionEndpoint.GetBySystemName("us-east-2")
 				}
 			); ;
+		}
+
+		/// <summary>
+		///		Configure database.
+		/// </summary>
+		private void ConfigureDb(IServiceCollection services)
+		{
+			string mySqlConnectionStr = this.Configuration["DatabaseSettings:mySQLConnection"];
 		}
 	}
 }
