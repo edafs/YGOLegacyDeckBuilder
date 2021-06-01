@@ -1,3 +1,9 @@
+/*******************************
+	CREATE A USER FOR THE DB
+*******************************/
+
+CREATE USER YgoDbUser
+	IDENTIFIED BY 'SomeSecurePassword!';
 
 /****************************
 	CREATE THE MAIN TABLE
@@ -17,7 +23,10 @@ CREATE TABLE CardCatalog(
 	CONSTRAINT PK_CardCatalog PRIMARY KEY (CardID)
 );
 
-
+GRANT INSERT ON CardCatalog TO YgoDbUser;
+GRANT SELECT ON CardCatalog TO YgoDbUser;
+GRANT UPDATE ON CardCatalog TO YgoDbUser;
+GRANT DELETE ON CardCatalog TO YgoDbUser;
 
 /****************************
 	CREATE THE SET TABLE
@@ -33,6 +42,10 @@ CREATE TABLE SetCatalog(
 	CONSTRAINT PK_SetCatalog PRIMARY KEY (SetId)
 );
 
+GRANT INSERT ON SetCatalog TO YgoDbUser;
+GRANT SELECT ON SetCatalog TO YgoDbUser;
+GRANT UPDATE ON SetCatalog TO YgoDbUser;
+GRANT DELETE ON SetCatalog TO YgoDbUser;
 
 /******************************************
 	CREATE THE LEGALITY STATUS TABLE
@@ -45,3 +58,8 @@ CREATE TABLE Restrictions(
     
     CONSTRAINT PK_Restrictions PRIMARY KEY (RestrictionID)
 );
+
+GRANT INSERT ON Restrictions TO YgoDbUser;
+GRANT SELECT ON Restrictions TO YgoDbUser;
+GRANT UPDATE ON Restrictions TO YgoDbUser;
+GRANT DELETE ON Restrictions TO YgoDbUser;
