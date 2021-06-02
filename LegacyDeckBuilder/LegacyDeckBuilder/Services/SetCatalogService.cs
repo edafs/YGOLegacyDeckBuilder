@@ -31,9 +31,9 @@ namespace LegacyDeckBuilder.Services
 		/// <summary>
 		///		Returns all the sets released by Konami.
 		/// </summary>
-		public async Task<IEnumerable<SetReleases>> GetSetCatalog()
+		public async Task<IEnumerable<SetCatalog>> GetSetCatalog()
 		{
-			IEnumerable<SetReleases> setCatalog = await this.SetCatalogRepo.GetSetCatalog();
+			IEnumerable<SetCatalog> setCatalog = await this.SetCatalogRepo.GetSetCatalog();
 
 			if(setCatalog == null)
 			{

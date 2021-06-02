@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DeckBuilderService.Banlist;
 using LegacyDeckBuilder.Banlist.Interfaces;
 using LegacyDeckBuilder.Models;
 

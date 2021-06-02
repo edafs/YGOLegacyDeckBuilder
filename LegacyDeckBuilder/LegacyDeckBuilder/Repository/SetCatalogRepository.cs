@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using LegacyDeckBuilder.Models;
 using LegacyDeckBuilder.Models.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace LegacyDeckBuilder.Repository
 {
@@ -10,19 +11,29 @@ namespace LegacyDeckBuilder.Repository
 	/// </summary>
 	public class SetCatalogRepository
 	{
+		private readonly YGOContext _ygoContext;
+
 		/// <summary>
 		///		Operations on the set Catalog Dynamo Table.
 		/// </summary>
-		public SetCatalogRepository() { }
+		public SetCatalogRepository(YGOContext context)
+		{
+			_ygoContext = context;
+		}
 
 		/// <summary>
 		///		Get the full set catalog from dynamoDB.
 		/// </summary>
-		public async Task<IEnumerable<SetReleases>> GetSetCatalog()
+		public async Task<List<SetCatalog>> GetSetCatalog()
 		{
-			throw new NotImplementedException(
-				"LegacyDeckBuilder.Repository.SetCatalogRepo.GetSetCatalog()"
-			);
+			List<SetCatalog> fullCatalog = new List<SetCatalog>();
+
+			using (YGOContext context = _ygoContext)
+			{
+				fullCatalog = await context.SetCatalogs.AsNoTracking().ToListAsync();
+			}
+
+			return fullCatalog;
 		}
 	}
 }

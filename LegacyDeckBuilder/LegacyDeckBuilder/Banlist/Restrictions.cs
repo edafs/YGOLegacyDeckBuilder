@@ -1,4 +1,4 @@
-﻿namespace DeckBuilderService.Banlist
+﻿namespace LegacyDeckBuilder.Banlist
 {
     public enum Restrictions
     {

@@ -5,6 +5,7 @@ using LegacyDeckBuilder.Repository;
 using LegacyDeckBuilder.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,8 +29,8 @@ namespace LegacyDeckBuilder
 			services.AddControllers();
 
 			// Set Catalog dependencies.
-			services.AddSingleton<SetCatalogService>();
-			services.AddSingleton<SetCatalogRepository>();
+			services.AddTransient<SetCatalogService>();
+			services.AddTransient<SetCatalogRepository>();
 
 			ConfigureAws(services);
 			ConfigureDb(services);
@@ -74,7 +75,10 @@ namespace LegacyDeckBuilder
 		/// </summary>
 		private void ConfigureDb(IServiceCollection services)
 		{
-			string mySqlConnectionStr = this.Configuration["DatabaseSettings:mySQLConnection"];
+			string ygoDbConnectionStr = Configuration.GetConnectionString("YgoDbConnection");
+			services.AddDbContext<YGOContext>(options =>
+			   options.UseMySql(ygoDbConnectionStr, ServerVersion.AutoDetect(ygoDbConnectionStr))
+			);
 		}
 	}
 }
