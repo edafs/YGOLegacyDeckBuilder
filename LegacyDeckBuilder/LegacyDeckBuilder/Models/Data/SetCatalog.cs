@@ -10,7 +10,6 @@ namespace LegacyDeckBuilder.Models.Data
 	[Table("SetCatalog")]
 	public class SetCatalog
 	{
-
 		/// <summary>
 		///		The primary key Id.
 		///		This can be set by the db.
