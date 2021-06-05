@@ -1,4 +1,4 @@
-﻿using DeckBuilderService.Banlist;
+﻿using LegacyDeckBuilder.Banlist;
 
 namespace LegacyDeckBuilder.Models
 {

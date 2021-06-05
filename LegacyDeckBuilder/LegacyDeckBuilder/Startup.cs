@@ -1,9 +1,11 @@
 using Amazon;
 using Amazon.Extensions.NETCore.Setup;
+using LegacyDeckBuilder.Models;
 using LegacyDeckBuilder.Repository;
 using LegacyDeckBuilder.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,8 +21,6 @@ namespace LegacyDeckBuilder
 
 		public IConfiguration Configuration { get; }
 
-		
-
 		/// <summary>
 		///		This method gets called by the runtime. Use this method to add services to the container.
 		/// </summary>
@@ -29,10 +29,11 @@ namespace LegacyDeckBuilder
 			services.AddControllers();
 
 			// Set Catalog dependencies.
-			services.AddSingleton<SetCatalogService>();
-			services.AddSingleton<SetCatalogRepository>();
+			services.AddTransient<SetCatalogService>();
+			services.AddTransient<SetCatalogRepository>();
 
 			ConfigureAws(services);
+			ConfigureDb(services);
 		}
 
 		/// <summary>
@@ -67,6 +68,17 @@ namespace LegacyDeckBuilder
 					Region = RegionEndpoint.GetBySystemName("us-east-2")
 				}
 			); ;
+		}
+
+		/// <summary>
+		///		Configure database.
+		/// </summary>
+		private void ConfigureDb(IServiceCollection services)
+		{
+			string ygoDbConnectionStr = Configuration.GetConnectionString("YgoDbConnection");
+			services.AddDbContext<YGOContext>(options =>
+			   options.UseMySql(ygoDbConnectionStr, ServerVersion.AutoDetect(ygoDbConnectionStr))
+			);
 		}
 	}
 }
