@@ -37,6 +37,23 @@ namespace LegacyDeckBuilder.Repository
 		}
 
 		/// <summary>
+		///		Adds items to the set catalog database.
+		/// </summary>
+		public async Task<bool> AddItems(List<SetCatalog> itemsToAdd)
+		{
+			using(YGOContext context = _ygoContext)
+			{
+				if(itemsToAdd.Count != 0)
+				{
+					await context.AddRangeAsync(itemsToAdd);
+					await context.SaveChangesAsync();
+				}
+			}
+
+			return true;
+		}
+
+		/// <summary>
 		///		Removes all contents of the set catalog db.
 		/// </summary>
 		public async Task<bool> PurgeDb()
@@ -49,7 +66,7 @@ namespace LegacyDeckBuilder.Repository
 				if(oldRecords.Count != 0)
 				{
 					context.SetCatalogs.RemoveRange(oldRecords);
-					context.SaveChanges();
+					await context.SaveChangesAsync();
 				}
 			}
 
