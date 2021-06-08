@@ -35,5 +35,25 @@ namespace LegacyDeckBuilder.Repository
 
 			return fullCatalog;
 		}
+
+		/// <summary>
+		///		Removes all contents of the set catalog db.
+		/// </summary>
+		public async Task<bool> PurgeDb()
+		{
+			using (YGOContext context = _ygoContext)
+			{
+				// Remove all the old records.
+				List<SetCatalog> oldRecords = await context.SetCatalogs.ToListAsync();
+
+				if(oldRecords.Count != 0)
+				{
+					context.SetCatalogs.RemoveRange(oldRecords);
+					context.SaveChanges();
+				}
+			}
+
+			return true;
+		}
 	}
 }
