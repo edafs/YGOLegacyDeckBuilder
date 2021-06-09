@@ -33,6 +33,9 @@ namespace LegacyDeckBuilder.Services
 		{
 			this.SetCatalogRepo = setCatalogRepo ??
 				throw new ArgumentNullException("SetCatalogRepo not initialized.");
+
+			this.WebService = webService ??
+				throw new ArgumentNullException("WebService was not initialized.");
 		}
 
 		/// <summary>

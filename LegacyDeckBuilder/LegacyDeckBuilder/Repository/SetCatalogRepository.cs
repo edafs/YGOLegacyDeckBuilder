@@ -11,14 +11,14 @@ namespace LegacyDeckBuilder.Repository
 	/// </summary>
 	public class SetCatalogRepository
 	{
-		private readonly YGOContext _ygoContext;
+		private readonly YGOContext Context;
 
 		/// <summary>
 		///		Operations on the set Catalog Dynamo Table.
 		/// </summary>
 		public SetCatalogRepository(YGOContext context)
 		{
-			_ygoContext = context;
+			this.Context = context;
 		}
 
 		/// <summary>
@@ -26,12 +26,8 @@ namespace LegacyDeckBuilder.Repository
 		/// </summary>
 		public async Task<List<SetCatalog>> GetSetCatalog()
 		{
-			List<SetCatalog> fullCatalog = new List<SetCatalog>();
-
-			using (YGOContext context = _ygoContext)
-			{
-				fullCatalog = await context.SetCatalogs.AsNoTracking().ToListAsync();
-			}
+			List<SetCatalog> fullCatalog = await this.Context
+				.SetCatalogs.AsNoTracking().ToListAsync();
 
 			return fullCatalog;
 		}
@@ -41,13 +37,10 @@ namespace LegacyDeckBuilder.Repository
 		/// </summary>
 		public async Task<bool> AddItems(List<SetCatalog> itemsToAdd)
 		{
-			using(YGOContext context = _ygoContext)
+			if (itemsToAdd.Count != 0)
 			{
-				if(itemsToAdd.Count != 0)
-				{
-					await context.AddRangeAsync(itemsToAdd);
-					await context.SaveChangesAsync();
-				}
+				await this.Context.AddRangeAsync(itemsToAdd);
+				await this.Context.SaveChangesAsync();
 			}
 
 			return true;
@@ -58,17 +51,16 @@ namespace LegacyDeckBuilder.Repository
 		/// </summary>
 		public async Task<bool> PurgeDb()
 		{
-			using (YGOContext context = _ygoContext)
-			{
-				// Remove all the old records.
-				List<SetCatalog> oldRecords = await context.SetCatalogs.ToListAsync();
+			// Remove all the old records.
+			List<SetCatalog> oldRecords = await this.Context
+				.SetCatalogs.ToListAsync();
 
-				if(oldRecords.Count != 0)
-				{
-					context.SetCatalogs.RemoveRange(oldRecords);
-					await context.SaveChangesAsync();
-				}
+			if (oldRecords.Count != 0)
+			{
+				this.Context.SetCatalogs.RemoveRange(oldRecords);
+				await this.Context.SaveChangesAsync();
 			}
+
 
 			return true;
 		}

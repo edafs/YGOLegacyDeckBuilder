@@ -32,8 +32,8 @@ namespace LegacyDeckBuilder
 			services.AddTransient<SetCatalogService>();
 			services.AddTransient<SetCatalogRepository>();
 
-			// Other dependencies.
-			services.AddSingleton<WebServices>();
+			// Register Http Clients.
+			services.AddHttpClient<WebServices>();
 
 			ConfigureAws(services);
 			ConfigureDb(services);
