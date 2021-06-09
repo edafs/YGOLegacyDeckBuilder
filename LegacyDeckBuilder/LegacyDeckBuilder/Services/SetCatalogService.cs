@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LegacyDeckBuilder.Models.Adapter;
 using LegacyDeckBuilder.Models.Data;
+using LegacyDeckBuilder.Models.Response;
 using LegacyDeckBuilder.Repository;
 
 namespace LegacyDeckBuilder.Services
@@ -15,14 +17,19 @@ namespace LegacyDeckBuilder.Services
 	public class SetCatalogService
 	{
 		/// <summary>
-		///		Singleton instance of <see cref="SetCatalogRepository"/>.
+		///		An instance of <see cref="SetCatalogRepository"/>.
 		/// </summary>
 		public readonly SetCatalogRepository SetCatalogRepo;
 
 		/// <summary>
+		///		An instance of <see cref="WebServices"/>.
+		/// </summary>
+		public readonly WebServices WebService;
+
+		/// <summary>
 		///		Constructor for <see cref="SetCatalogService"/>.
 		/// </summary>
-		public SetCatalogService(SetCatalogRepository setCatalogRepo)
+		public SetCatalogService(SetCatalogRepository setCatalogRepo, WebServices webService)
 		{
 			this.SetCatalogRepo = setCatalogRepo ??
 				throw new ArgumentNullException("SetCatalogRepo not initialized.");
@@ -42,6 +49,44 @@ namespace LegacyDeckBuilder.Services
 			else
 			{
 				return setCatalog;
+			}
+		}
+
+		/// <summary>
+		///		Removes all the content in the database and reloads the data
+		///		from the card sets in the YGO api call.
+		/// </summary>
+		public async Task<bool> RefreshCatalog()
+		{
+			List<CardSet> allSets = GetAllCardSets();
+
+			if (allSets.Count == 0)
+			{
+				return false;
+			}
+
+			await this.SetCatalogRepo.PurgeDb();
+			await this.SetCatalogRepo.AddItems(allSets.ToData());
+
+			return true;
+		}
+
+		/// <summary>
+		///		Gets all the card sets from the YGO.
+		/// </summary>
+		private List<CardSet> GetAllCardSets()
+		{
+			List<CardSet> response = this.WebService
+				.SendGetRequest<CardSet>("https://db.ygoprodeck.com/api/v7/cardsets.php")
+				.Result;
+
+			if(response.Count > 0)
+			{
+				return response;
+			}
+			else
+			{
+				return new List<CardSet>();
 			}
 		}
 	}
