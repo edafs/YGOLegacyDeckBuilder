@@ -61,7 +61,7 @@ namespace LegacyDeckBuilder.Repository
 		/// <summary>
 		///		Purges the DB.
 		/// </summary>
-		public async void PurgeDb()
+		public async Task PurgeDb()
 		{
 			/*
 			 *	TODO:

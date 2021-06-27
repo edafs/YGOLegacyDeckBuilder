@@ -35,7 +35,7 @@ namespace LegacyDeckBuilder.Repository
 		/// <summary>
 		///		Adds items to the set catalog database.
 		/// </summary>
-		public async void AddItems(List<SetCatalog> itemsToAdd)
+		public async Task AddItems(List<SetCatalog> itemsToAdd)
 		{
 			if (itemsToAdd.Count != 0)
 			{
@@ -49,7 +49,7 @@ namespace LegacyDeckBuilder.Repository
 		/// <summary>
 		///		Removes all contents of the set catalog db.
 		/// </summary>
-		public async void PurgeDb()
+		public async Task PurgeDb()
 		{
 			// Remove all the old records.
 			List<SetCatalog> oldRecords = await this.Context

@@ -24,17 +24,17 @@ namespace LegacyDeckBuilder.Services
 		/// <summary>
 		///		An instance of <see cref="WebServices"/>.
 		/// </summary>
-		public readonly WebServices WebService;
+		public readonly WebService WebServices;
 
 		/// <summary>
 		///		Constructor for <see cref="SetCatalogService"/>.
 		/// </summary>
-		public SetCatalogService(SetCatalogRepository setCatalogRepo, WebServices webService)
+		public SetCatalogService(SetCatalogRepository setCatalogRepo, WebService webService)
 		{
 			this.SetCatalogRepo = setCatalogRepo ??
 				throw new ArgumentNullException("SetCatalogRepo not initialized.");
 
-			this.WebService = webService ??
+			this.WebServices = webService ??
 				throw new ArgumentNullException("WebService was not initialized.");
 		}
 
@@ -61,7 +61,7 @@ namespace LegacyDeckBuilder.Services
 		/// </summary>
 		public async Task<bool> RefreshCatalog()
 		{
-			List<CardSet> allSets = GetAllCardSets();
+			List<CardSet> allSets = await GetAllCardSets();
 
 			if (allSets.Count == 0)
 			{
@@ -77,11 +77,10 @@ namespace LegacyDeckBuilder.Services
 		/// <summary>
 		///		Gets all the card sets from the YGO.
 		/// </summary>
-		private List<CardSet> GetAllCardSets()
+		private async Task<List<CardSet>> GetAllCardSets()
 		{
-			List<CardSet> response = this.WebService
-				.SendGetRequest<CardSet>("https://db.ygoprodeck.com/api/v7/cardsets.php")
-				.Result;
+			List<CardSet> response = await WebServices
+				.SendGetRequest<CardSet>("https://db.ygoprodeck.com/api/v7/cardsets.php");
 
 			if(response.Count > 0)
 			{

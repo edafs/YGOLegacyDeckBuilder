@@ -8,7 +8,7 @@ namespace LegacyDeckBuilder.Services
 	/// <summary>
 	///		Makes HTTP requests.
 	/// </summary>
-	public class WebServices
+	public class WebService
 	{
 		/// <summary>
 		///		An instance of <see cref="HttpClient"/>.
@@ -18,7 +18,7 @@ namespace LegacyDeckBuilder.Services
 		/// <summary>
 		///		Instance of <see cref="WebServices"/>
 		/// </summary>
-		public WebServices(HttpClient httpWebClient)
+		public WebService(HttpClient httpWebClient)
 		{
 			this.HttpWebClient = httpWebClient;
 		}
