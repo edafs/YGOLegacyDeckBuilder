@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using LegacyDeckBuilder.Models.Data;
 using LegacyDeckBuilder.Models.Response;
 using LegacyDeckBuilder.Repository;
 
@@ -27,9 +28,9 @@ namespace LegacyDeckBuilder.Services
 		}
 
 		/// <summary>
-		///		Gets all the cards.
+		///		Gets all the cards from the YGODB api.
 		/// </summary>
-		public async Task<List<CardInfo>> GetAllCards()
+		private async Task<List<CardInfo>> GetAllCards()
 		{
 			List<CardInfo> cardsFromApi = await this.WebServices
 				.SendGetRequest<CardInfo>("https://db.ygoprodeck.com/api/v7/cardinfo.php");
@@ -40,6 +41,21 @@ namespace LegacyDeckBuilder.Services
 			}
 
 			return new List<CardInfo>();
+		}
+
+		/// <summary>
+		///		Gets all the cards from the Card Catalog.
+		/// </summary>
+		public async Task<List<CardCatalog>> GetCardCatalog()
+		{
+			List<CardCatalog> allCardsFromCatalog = await this.CardRepository.GetCardCatalog();
+
+			if(allCardsFromCatalog == null)
+			{
+				return new List<CardCatalog>();
+			}
+
+			return allCardsFromCatalog;
 		}
 	}
 }
