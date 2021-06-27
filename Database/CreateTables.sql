@@ -33,7 +33,7 @@ GRANT DELETE ON CardCatalog TO YgoDbUser;
 ****************************/
 
 CREATE TABLE SetCatalog(
-	SetId		INT NOT NULL,
+	SetId		INT NOT NULL AUTO_INCREMENT,
 	SetCode		VARCHAR(15) NOT NULL,
 	SetName		VARCHAR(150) NOT NULL,
 	ReleaseDate	DATETIME NOT NULL,

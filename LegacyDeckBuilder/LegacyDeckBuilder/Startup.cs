@@ -32,6 +32,9 @@ namespace LegacyDeckBuilder
 			services.AddTransient<SetCatalogService>();
 			services.AddTransient<SetCatalogRepository>();
 
+			// Register Http Clients.
+			services.AddHttpClient<WebServices>();
+
 			ConfigureAws(services);
 			ConfigureDb(services);
 		}

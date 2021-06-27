@@ -9,7 +9,7 @@ namespace LegacyDeckBuilder.Controllers
 	/// <summary>
 	///		The Set Catalog Controller
 	/// </summary>
-	[Route("SetCatalog")]
+	[Route("api/SetCatalog")]
 	public class SetCatalogController : Controller
 	{
 		/// <summary>
@@ -25,6 +25,20 @@ namespace LegacyDeckBuilder.Controllers
 		{
 			this.CatalogService = service ??
 				throw new ArgumentNullException("SetCatalogService not initialized.");
+		}
+
+		[HttpPut, Route("RefreshCatalog")]
+		public async Task<IActionResult> RefreshCatalog()
+		{
+			bool wasTaskSucessful = await this.CatalogService.RefreshCatalog();
+
+			if (wasTaskSucessful == false)
+			{
+				return StatusCode((int)HttpStatusCode.InternalServerError,
+					"Unable to refresh the catalog. Please try again another time.");
+			}
+
+			return Ok("The set list has been refreshed.");
 		}
 
 		/// <summary>

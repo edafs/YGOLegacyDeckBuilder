@@ -13,6 +13,8 @@
     <Folder Include="Services\" />
     <Folder Include="Repository\" />
     <Folder Include="Models\Data\" />
+    <Folder Include="Models\Response\" />
+    <Folder Include="Models\Adapter\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0.1" />
