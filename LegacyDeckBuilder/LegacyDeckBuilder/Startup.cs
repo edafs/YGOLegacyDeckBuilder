@@ -32,8 +32,12 @@ namespace LegacyDeckBuilder
 			services.AddTransient<SetCatalogService>();
 			services.AddTransient<SetCatalogRepository>();
 
+			// Card Catalog dependencies.
+			services.AddTransient<CardCatalogService>();
+			services.AddTransient<CardCatalogRepository>();
+
 			// Register Http Clients.
-			services.AddHttpClient<WebServices>();
+			services.AddHttpClient<WebService>();
 
 			ConfigureAws(services);
 			ConfigureDb(services);

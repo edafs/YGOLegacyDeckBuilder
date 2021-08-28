@@ -24,7 +24,7 @@ namespace LegacyDeckBuilder.Models.Adapter
 				return catalog;
 			}
 
-			foreach(CardSet set in cardSets)
+			foreach (CardSet set in cardSets)
 			{
 				SetCatalog catalogItem = new SetCatalog()
 				{
@@ -32,7 +32,7 @@ namespace LegacyDeckBuilder.Models.Adapter
 					SetName = set.SetName,
 					CardCount = set.CardCount,
 					ReleaseDate = Convert.ToDateTime(set.ReleaseDate)
-			};
+				};
 
 				catalog.Add(catalogItem);
 			}
