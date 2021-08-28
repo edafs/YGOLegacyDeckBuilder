@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using LegacyDeckBuilder.Models.Response;
 
 namespace LegacyDeckBuilder.Services
 {
@@ -24,21 +25,42 @@ namespace LegacyDeckBuilder.Services
 		}
 
 		/// <summary>
-		///		Sends a HTTP GET request.
+		///		Sends a HTTP GET request to get the
+		///		card sets from the YGOPRO Api.
 		/// </summary>
-		public async Task<List<T>> SendGetRequest<T>(string uri, bool overrideSizeLimit = false)
+		public async Task<List<T>> CardSetFromYGOService<T>(string uri)
 		{
 			if (string.IsNullOrWhiteSpace(uri))
 			{
 				return new List<T>();
 			}
 
-			var serializer = new JsonSerializer();
-
 			string response = await this.HttpWebClient.GetStringAsync(uri);
 			List<T> results = JsonSerializer.Deserialize<List<T>>(response);
 
 			return results;
+		}
+
+		/// <summary>
+		///		Sends a HTTP Get request to get the
+		///		card catalog from the YGOPRO api.
+		/// </summary>
+		public async Task<List<CardInfo>> CardCatalogFromYgoService(string uri)
+		{
+			if (string.IsNullOrWhiteSpace(uri))
+			{
+				return new List<CardInfo>();
+			}
+
+			string response = await this.HttpWebClient.GetStringAsync(uri);
+			var payload = JsonSerializer.Deserialize<CardInfoPayload>(response);
+
+			if(payload.CardCatalog != null && payload.CardCatalog.Count != 0)
+			{
+				return payload.CardCatalog;
+			}
+
+			return new List<CardInfo>();
 		}
 	}
 }

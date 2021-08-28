@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LegacyDeckBuilder.Models.Adapter;
 using LegacyDeckBuilder.Models.Data;
@@ -33,12 +34,13 @@ namespace LegacyDeckBuilder.Services
 		/// </summary>
 		private async Task<List<CardInfo>> GetAllCards()
 		{
-			List<CardInfo> cardsFromApi = await this.WebServices
-				.SendGetRequest<CardInfo>("https://db.ygoprodeck.com/api/v7/cardinfo.php");
+			List<CardInfo> allCards = await this.WebServices
+				.CardCatalogFromYgoService("https://db.ygoprodeck.com/api/v7/cardinfo.php")
+				;
 
-			if(cardsFromApi.Count > 0)
+			if (allCards.Count != 0)
 			{
-				return cardsFromApi;
+				return allCards;
 			}
 
 			return new List<CardInfo>();

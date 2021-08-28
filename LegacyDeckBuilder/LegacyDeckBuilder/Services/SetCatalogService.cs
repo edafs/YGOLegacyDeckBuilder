@@ -80,7 +80,7 @@ namespace LegacyDeckBuilder.Services
 		private async Task<List<CardSet>> GetAllCardSets()
 		{
 			List<CardSet> response = await WebServices
-				.SendGetRequest<CardSet>("https://db.ygoprodeck.com/api/v7/cardsets.php");
+				.CardSetFromYGOService<CardSet>("https://db.ygoprodeck.com/api/v7/cardsets.php");
 
 			if(response.Count > 0)
 			{

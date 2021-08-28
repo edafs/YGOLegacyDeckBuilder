@@ -4,11 +4,20 @@ using System.Text.Json.Serialization;
 namespace LegacyDeckBuilder.Models.Response
 {
 	/// <summary>
-	///		The information of a card from the YGODB.
+	///		The master payload of a series of <see cref="CardInfo"/>.
 	/// </summary>
 	///	<remarks>
 	///		https://db.ygoprodeck.com/api/v7/cardinfo.php
 	/// </remarks>
+	public class CardInfoPayload
+	{
+		[JsonPropertyName("data")]
+		public List<CardInfo> CardCatalog { get; set; }
+	}
+
+	/// <summary>
+	///		The information of a card from the YGODB.
+	/// </summary>
 	public class CardInfo
 	{
 		[JsonPropertyName("id")]

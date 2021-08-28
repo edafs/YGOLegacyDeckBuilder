@@ -23,12 +23,12 @@ namespace LegacyDeckBuilder.Tests
 		}
 
 		[Fact]
-		public void SendCanGetCardSets()
+		public void CanGetCardSets()
 		{
 			WebService service = this.WebService;
 
 			List<CardSet> response = service
-				.SendGetRequest<CardSet>("https://db.ygoprodeck.com/api/v7/cardsets.php")
+				.CardSetFromYGOService<CardSet>("https://db.ygoprodeck.com/api/v7/cardsets.php")
 				.Result;
 
 			CardSet cyberneticRevolution = response.FirstOrDefault(
@@ -42,6 +42,28 @@ namespace LegacyDeckBuilder.Tests
 				"2005-08-17",
 				StringComparison.InvariantCultureIgnoreCase)
 			);
+		}
+
+		[Fact]
+		public void CanGetCardCatalog()
+		{
+			WebService service = this.WebService;
+
+			List<CardInfo> response = service
+				.CardCatalogFromYgoService("https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=Blue-Eyes")
+				.Result;
+
+			Assert.True(response.Count > 30);
+
+			CardInfo blueEyes = response.FirstOrDefault(card =>
+				string.Equals(card.Name, "Blue-Eyes White Dragon", StringComparison.InvariantCultureIgnoreCase)
+			);
+
+			Assert.Contains("https://storage.googleapis.com/ygoprodeck.com/pics_small/",
+				blueEyes.Images.FirstOrDefault().Thumbnail);
+
+			Assert.Contains("https://storage.googleapis.com/ygoprodeck.com/pics/",
+				blueEyes.Images.FirstOrDefault().FullImage);
 		}
 	}
 }
