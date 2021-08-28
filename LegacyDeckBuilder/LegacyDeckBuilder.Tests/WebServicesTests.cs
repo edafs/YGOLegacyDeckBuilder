@@ -13,19 +13,19 @@ namespace LegacyDeckBuilder.Tests
 		/// <summary>
 		///		Gets an initialized instance of <see cref="WebServices"/>.
 		/// </summary>
-		public WebServices WebService
+		public WebService WebService
 		{
 			get
 			{
 				HttpClient httpClient = new HttpClient();
-				return new WebServices(httpClient);
+				return new WebService(httpClient);
 			}
 		}
 
 		[Fact]
 		public void SendCanGetCardSets()
 		{
-			WebServices service = this.WebService;
+			WebService service = this.WebService;
 
 			List<CardSet> response = service
 				.SendGetRequest<CardSet>("https://db.ygoprodeck.com/api/v7/cardsets.php")

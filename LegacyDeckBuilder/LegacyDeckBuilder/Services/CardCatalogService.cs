@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using LegacyDeckBuilder.Models.Adapter;
 using LegacyDeckBuilder.Models.Data;
 using LegacyDeckBuilder.Models.Response;
 using LegacyDeckBuilder.Repository;
@@ -44,9 +45,19 @@ namespace LegacyDeckBuilder.Services
 		}
 
 		/// <summary>
+		///		Refresh the card catalog.
+		/// </summary>
+		public async Task<bool> RefreshCardCatalog()
+		{
+			await this.CardRepository.PurgeDb();
+			List<CardInfo> allCards = this.GetAllCards().Result;
+			return await this.CardRepository.AddCardsToCatalog(allCards.ToData());
+		}
+
+		/// <summary>
 		///		Gets all the cards from the Card Catalog.
 		/// </summary>
-		public async Task<List<CardCatalog>> GetCardCatalog()
+		public async Task<List<CardCatalog>> GetFullCardCatalog()
 		{
 			List<CardCatalog> allCardsFromCatalog = await this.CardRepository.GetCardCatalog();
 

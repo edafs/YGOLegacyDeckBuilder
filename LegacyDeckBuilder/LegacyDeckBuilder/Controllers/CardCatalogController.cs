@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using LegacyDeckBuilder.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -33,9 +34,17 @@ namespace LegacyDeckBuilder.Controllers
 		///		Refreshes the database.
 		/// </summary>
 		[HttpPut, Route("RefreshCatalog")]
-		public Task<IActionResult> RefreshCatalog()
+		public async Task<IActionResult> RefreshCatalog()
 		{
-			throw new NotImplementedException("To be completed...");
+			bool wasTaskSuccessful = await this.CardService.RefreshCardCatalog();
+
+			if (!wasTaskSuccessful)
+			{
+				return StatusCode((int)HttpStatusCode.InternalServerError,
+					"Failed to refresh the card catalog. Try again later.");
+			}
+
+			return Ok("Card catalog has been refreshed.");
 		}
 
 		/// <summary>

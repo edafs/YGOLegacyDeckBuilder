@@ -26,12 +26,14 @@ namespace LegacyDeckBuilder.Services
 		/// <summary>
 		///		Sends a HTTP GET request.
 		/// </summary>
-		public async Task<List<T>> SendGetRequest<T>(string uri)
+		public async Task<List<T>> SendGetRequest<T>(string uri, bool overrideSizeLimit = false)
 		{
 			if (string.IsNullOrWhiteSpace(uri))
 			{
 				return new List<T>();
 			}
+
+			var serializer = new JsonSerializer();
 
 			string response = await this.HttpWebClient.GetStringAsync(uri);
 			List<T> results = JsonSerializer.Deserialize<List<T>>(response);
