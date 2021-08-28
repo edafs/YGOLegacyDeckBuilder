@@ -35,8 +35,7 @@ namespace LegacyDeckBuilder.Services
 		private async Task<List<CardInfo>> GetAllCards()
 		{
 			List<CardInfo> allCards = await this.WebServices
-				.CardCatalogFromYgoService("https://db.ygoprodeck.com/api/v7/cardinfo.php")
-				;
+				.CardCatalogFromYgoService("https://db.ygoprodeck.com/api/v7/cardinfo.php");
 
 			if (allCards.Count != 0)
 			{
@@ -51,8 +50,14 @@ namespace LegacyDeckBuilder.Services
 		/// </summary>
 		public async Task<bool> RefreshCardCatalog()
 		{
-			await this.CardRepository.PurgeDb();
 			List<CardInfo> allCards = this.GetAllCards().Result;
+
+			if (!allCards.Any())
+			{
+				return false;
+			}
+
+			await this.CardRepository.PurgeDb();
 			return await this.CardRepository.AddCardsToCatalog(allCards.ToData());
 		}
 

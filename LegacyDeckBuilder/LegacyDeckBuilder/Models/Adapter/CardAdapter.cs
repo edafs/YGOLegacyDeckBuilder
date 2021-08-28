@@ -27,7 +27,7 @@ namespace LegacyDeckBuilder.Models.Adapter
 				{
 					CardId = card.Id,
 					CardName = card.Name,
-					ImageUrl = card.Images.FirstOrDefault().FullImage
+					ImageUrl = card.Images.FirstOrDefault().Thumbnail
 				};
 
 				convertedCards.Add(convertedCard);
