@@ -15,8 +15,9 @@ This application will be using mySQL for the back end. This will then be consume
 
 #### mySQL Installation
 
-- [Community edition](https://dev.mysql.com/downloads/mysql/) will suffice for local development, and it's free.
-- [Workbench](https://dev.mysql.com/downloads/workbench/) is a GUI tool for managing your SQL instance.
+- [Community Edition](https://dev.mysql.com/downloads/mysql/) will suffice for local development, and it's free.
+- [Workbench](https://dev.mysql.com/downloads/workbench/) is a GUI tool for managing your SQL instance (doesn't seem to work on Macs anymore).
+- [Sequel Ace](https://sequel-ace.com/) is a GUI tool for managing SQL instances. Workbench seems to be FUBAR'd on Macs lately, and this is a good alternative that also supports M1 chips.
 
 #### AmazonRDS Instance
 
