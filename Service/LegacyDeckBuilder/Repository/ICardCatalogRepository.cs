@@ -4,7 +4,7 @@ using LegacyDeckBuilder.Models.Data;
 
 namespace LegacyDeckBuilder.Repository
 {
-    public interface ICatalogRepository
+    public interface ICardCatalogRepository
     {
         /// <summary>
 		///		Adds card(s) to the card catalog database.

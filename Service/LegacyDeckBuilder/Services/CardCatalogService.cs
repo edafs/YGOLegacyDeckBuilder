@@ -11,9 +11,9 @@ namespace LegacyDeckBuilder.Services
 	public class CardCatalogService
 	{
 		/// <summary>
-		///		Singleton instance of <see cref="CardCatalogRepository"/> for this class.
+		///		Singleton instance of <see cref="ICardCatalogRepository"/> for this class.
 		/// </summary>
-		public readonly CardCatalogRepository CardRepository;
+		public readonly ICardCatalogRepository CardRepository;
 
 		/// <summary>
 		///		Singleton instance of <see cref="WebServices"/> for this class. 
@@ -23,7 +23,7 @@ namespace LegacyDeckBuilder.Services
 		/// <summary>
 		///		Default constructor for <see cref="CardCatalogService"/>.
 		/// </summary>
-		public CardCatalogService(CardCatalogRepository cardCatalogRepo, WebService webServices)
+		public CardCatalogService(ICardCatalogRepository cardCatalogRepo, WebService webServices)
 		{
 			this.CardRepository = cardCatalogRepo;
 			this.WebServices = webServices;

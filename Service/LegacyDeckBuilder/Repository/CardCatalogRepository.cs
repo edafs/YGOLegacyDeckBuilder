@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LegacyDeckBuilder.Repository
 {
-	public class CardCatalogRepository : ICatalogRepository
+	public class CardCatalogRepository : ICardCatalogRepository
 	{
 		/// <summary>
 		///		Database context.

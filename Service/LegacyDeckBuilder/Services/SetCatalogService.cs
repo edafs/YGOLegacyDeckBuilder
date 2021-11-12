@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LegacyDeckBuilder.Models.Adapter;
 using LegacyDeckBuilder.Models.Data;
@@ -17,9 +18,9 @@ namespace LegacyDeckBuilder.Services
 	public class SetCatalogService
 	{
 		/// <summary>
-		///		An instance of <see cref="SetCatalogRepository"/>.
+		///		An instance of <see cref="ISetCatalogRepository"/>.
 		/// </summary>
-		public readonly SetCatalogRepository SetCatalogRepo;
+		public readonly ISetCatalogRepository SetCatalogRepo;
 
 		/// <summary>
 		///		An instance of <see cref="WebServices"/>.
@@ -29,7 +30,7 @@ namespace LegacyDeckBuilder.Services
 		/// <summary>
 		///		Constructor for <see cref="SetCatalogService"/>.
 		/// </summary>
-		public SetCatalogService(SetCatalogRepository setCatalogRepo, WebService webService)
+		public SetCatalogService(ISetCatalogRepository setCatalogRepo, WebService webService)
 		{
 			this.SetCatalogRepo = setCatalogRepo ??
 				throw new ArgumentNullException("SetCatalogRepo not initialized.");
@@ -41,9 +42,9 @@ namespace LegacyDeckBuilder.Services
 		/// <summary>
 		///		Returns all the sets released by Konami.
 		/// </summary>
-		public async Task<IEnumerable<SetCatalog>> GetSetCatalog()
+		public async Task<List<SetCatalog>> GetSetCatalog()
 		{
-			IEnumerable<SetCatalog> setCatalog = await this.SetCatalogRepo.GetCatalog();
+			List<SetCatalog> setCatalog = await this.SetCatalogRepo.GetCatalog();
 
 			if(setCatalog == null)
 			{
