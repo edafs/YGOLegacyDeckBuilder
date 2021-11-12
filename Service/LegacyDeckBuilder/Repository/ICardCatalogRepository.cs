@@ -1,0 +1,30 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using LegacyDeckBuilder.Models.Data;
+
+namespace LegacyDeckBuilder.Repository
+{
+    public interface ICatalogRepository
+    {
+        /// <summary>
+		///		Adds card(s) to the card catalog database.
+		///		Return whether or not the task was successful.
+		/// </summary>
+        Task<bool> AddItems(IEnumerable<CardCatalog> cardsToAdd);
+
+        /// <summary>
+		///		Gets all card results from the card catalog.
+		/// </summary>
+        Task<List<CardCatalog>> GetCatalog();
+
+        /// <summary>
+		///		Purges the DB.
+		/// </summary>
+		Task PurgeDb();
+
+		/// <summary>
+		///		Searches for a particular card.
+		/// </summary>
+		List<CardCatalog> SearchForItem();
+	}
+}

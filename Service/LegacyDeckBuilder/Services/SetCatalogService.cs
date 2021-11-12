@@ -43,7 +43,7 @@ namespace LegacyDeckBuilder.Services
 		/// </summary>
 		public async Task<IEnumerable<SetCatalog>> GetSetCatalog()
 		{
-			IEnumerable<SetCatalog> setCatalog = await this.SetCatalogRepo.GetSetCatalog();
+			IEnumerable<SetCatalog> setCatalog = await this.SetCatalogRepo.GetCatalog();
 
 			if(setCatalog == null)
 			{

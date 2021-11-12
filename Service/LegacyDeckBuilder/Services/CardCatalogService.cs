@@ -58,7 +58,7 @@ namespace LegacyDeckBuilder.Services
 			}
 
 			await this.CardRepository.PurgeDb();
-			return await this.CardRepository.AddCardsToCatalog(allCards.ToData());
+			return await this.CardRepository.AddItems(allCards.ToData());
 		}
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace LegacyDeckBuilder.Services
 		/// </summary>
 		public async Task<List<CardCatalog>> GetFullCardCatalog()
 		{
-			List<CardCatalog> allCardsFromCatalog = await this.CardRepository.GetCardCatalog();
+			List<CardCatalog> allCardsFromCatalog = await this.CardRepository.GetCatalog();
 
 			if(allCardsFromCatalog == null)
 			{

@@ -9,7 +9,7 @@ namespace LegacyDeckBuilder.Repository
 	/// <summary>
 	///		Operations on the set Catalog Dynamo Table.
 	/// </summary>
-	public class SetCatalogRepository
+	public class SetCatalogRepository : ISetCatalogRepository
 	{
 		private readonly YGOContext Context;
 
@@ -24,7 +24,7 @@ namespace LegacyDeckBuilder.Repository
 		/// <summary>
 		///		Get the full set catalog from dynamoDB.
 		/// </summary>
-		public async Task<List<SetCatalog>> GetSetCatalog()
+		public async Task<List<SetCatalog>> GetCatalog()
 		{
 			List<SetCatalog> fullCatalog = await this.Context
 				.SetCatalogs.AsNoTracking().ToListAsync();
