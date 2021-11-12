@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using LegacyDeckBuilder.Models.Adapter;
 using LegacyDeckBuilder.Models.Data;
@@ -9,13 +8,10 @@ using LegacyDeckBuilder.Repository;
 
 namespace LegacyDeckBuilder.Services
 {
-	/// <summary>
-	///		Operations on the set Catalog Dynamo Table.
-	/// </summary>
-	/// <remarks>
-	///		Data Model: <see cref="SetReleases"/>.
-	/// </remarks>
-	public class SetCatalogService
+    /// <summary>
+    ///		Service Layer for the Card Sets.
+    /// </summary>
+    public class SetCatalogService : ISetCatalogService
 	{
 		/// <summary>
 		///		An instance of <see cref="ISetCatalogRepository"/>.
