@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LegacyDeckBuilder.Repository
 {
-	public class CardCatalogRepository
+	public class CardCatalogRepository : ICardCatalogRepository
 	{
 		/// <summary>
 		///		Database context.
@@ -27,7 +27,7 @@ namespace LegacyDeckBuilder.Repository
 		///		Adds card(s) to the card catalog database.
 		///		Return whether or not the task was successful.
 		/// </summary>
-		public async Task<bool> AddCardsToCatalog(IEnumerable<CardCatalog> cardsToAdd)
+		public async Task<bool> AddItems(IEnumerable<CardCatalog> cardsToAdd)
 		{
 			if (cardsToAdd.Count() != 0)
 			{
@@ -47,9 +47,9 @@ namespace LegacyDeckBuilder.Repository
 		}
 
 		/// <summary>
-		///		
+		///		Gets all card results from the card catalog.
 		/// </summary>
-		public async Task<List<CardCatalog>> GetCardCatalog()
+		public async Task<List<CardCatalog>> GetCatalog()
 		{
 			List<CardCatalog> fullCardCatalog = await this.Context
 				.CardCatalogs.AsNoTracking()
@@ -77,9 +77,13 @@ namespace LegacyDeckBuilder.Repository
 			}
 		}
 
-		public List<CardCatalog> SearchForCard()
+		/// <summary>
+		///		Searches for a particular card.
+		/// </summary>
+		public List<CardCatalog> SearchForItem()
 		{
 			throw new System.NotImplementedException("Search For Card Not Yet Implemented.");
 		}
+
 	}
 }

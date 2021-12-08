@@ -13,15 +13,15 @@ namespace LegacyDeckBuilder.Controllers
 	public class SetCatalogController : Controller
 	{
 		/// <summary>
-		///     Singleton instance of <see cref="SetCatalogService"/>.
+		///     Singleton instance of <see cref="ISetCatalogService"/>.
 		/// </summary>
-		private readonly SetCatalogService CatalogService;
+		private readonly ISetCatalogService CatalogService;
 
 		/// <summary>
 		///		Constructor for <see cref="SetCatalogController"/>.
 		/// </summary>
 		/// <param name="service"></param>
-		public SetCatalogController(SetCatalogService service)
+		public SetCatalogController(ISetCatalogService service)
 		{
 			this.CatalogService = service ??
 				throw new ArgumentNullException("SetCatalogService not initialized.");

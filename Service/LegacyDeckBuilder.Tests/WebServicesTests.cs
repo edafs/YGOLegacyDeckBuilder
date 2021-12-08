@@ -13,7 +13,7 @@ namespace LegacyDeckBuilder.Tests
 		/// <summary>
 		///		Gets an initialized instance of <see cref="WebServices"/>.
 		/// </summary>
-		public WebService WebService
+		private WebService WebService
 		{
 			get
 			{

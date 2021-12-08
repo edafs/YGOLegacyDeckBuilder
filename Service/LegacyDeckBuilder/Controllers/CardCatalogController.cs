@@ -19,12 +19,12 @@ namespace LegacyDeckBuilder.Controllers
 		/// <summary>
 		///		Singleton instance of the Card Service.
 		/// </summary>
-		private readonly CardCatalogService CardService;
+		private readonly ICardCatalogService CardService;
 
 		/// <summary>
 		///		Constructor for <see cref="CardCatalogController"/>.
 		/// </summary>
-		public CardCatalogController(CardCatalogService service)
+		public CardCatalogController(ICardCatalogService service)
 		{
 			this.CardService = service ??
 				throw new ArgumentNullException("Card Catalog Service is not properly initialized.");

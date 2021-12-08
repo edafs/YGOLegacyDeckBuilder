@@ -8,12 +8,12 @@ using LegacyDeckBuilder.Repository;
 
 namespace LegacyDeckBuilder.Services
 {
-	public class CardCatalogService
+	public class CardCatalogService: ICardCatalogService
 	{
 		/// <summary>
-		///		Singleton instance of <see cref="CardCatalogRepository"/> for this class.
+		///		Singleton instance of <see cref="ICardCatalogRepository"/> for this class.
 		/// </summary>
-		public readonly CardCatalogRepository CardRepository;
+		public readonly ICardCatalogRepository CardRepository;
 
 		/// <summary>
 		///		Singleton instance of <see cref="WebServices"/> for this class. 
@@ -23,7 +23,7 @@ namespace LegacyDeckBuilder.Services
 		/// <summary>
 		///		Default constructor for <see cref="CardCatalogService"/>.
 		/// </summary>
-		public CardCatalogService(CardCatalogRepository cardCatalogRepo, WebService webServices)
+		public CardCatalogService(ICardCatalogRepository cardCatalogRepo, WebService webServices)
 		{
 			this.CardRepository = cardCatalogRepo;
 			this.WebServices = webServices;
@@ -58,7 +58,7 @@ namespace LegacyDeckBuilder.Services
 			}
 
 			await this.CardRepository.PurgeDb();
-			return await this.CardRepository.AddCardsToCatalog(allCards.ToData());
+			return await this.CardRepository.AddItems(allCards.ToData());
 		}
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace LegacyDeckBuilder.Services
 		/// </summary>
 		public async Task<List<CardCatalog>> GetFullCardCatalog()
 		{
-			List<CardCatalog> allCardsFromCatalog = await this.CardRepository.GetCardCatalog();
+			List<CardCatalog> allCardsFromCatalog = await this.CardRepository.GetCatalog();
 
 			if(allCardsFromCatalog == null)
 			{
