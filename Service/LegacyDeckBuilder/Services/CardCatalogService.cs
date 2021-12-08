@@ -8,7 +8,7 @@ using LegacyDeckBuilder.Repository;
 
 namespace LegacyDeckBuilder.Services
 {
-	public class CardCatalogService
+	public class CardCatalogService: ICardCatalogService
 	{
 		/// <summary>
 		///		Singleton instance of <see cref="ICardCatalogRepository"/> for this class.
