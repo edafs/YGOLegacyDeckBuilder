@@ -29,12 +29,12 @@ namespace LegacyDeckBuilder
 			services.AddControllers();
 
 			// Set Catalog dependencies.
-			services.AddTransient<SetCatalogService>();
-			services.AddTransient<SetCatalogRepository>();
+			services.AddTransient<ISetCatalogService, SetCatalogService>();
+			services.AddTransient<ISetCatalogRepository, SetCatalogRepository>();
 
 			// Card Catalog dependencies.
-			services.AddTransient<CardCatalogService>();
-			services.AddTransient<CardCatalogRepository>();
+			services.AddTransient<ICardCatalogService, CardCatalogService>();
+			services.AddTransient<ICardCatalogRepository, CardCatalogRepository>();
 
 			// Register Http Clients.
 			services.AddHttpClient<WebService>();
