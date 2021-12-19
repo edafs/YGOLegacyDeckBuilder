@@ -18,6 +18,15 @@ namespace LegacyDeckBuilder.Services
 		/// </summary>
 		Task<List<CardCatalog>> GetFullCardCatalog();
 
+		/// <summary>
+		///		Search for a card by it's Id.
+		/// </summary>
+		Task<CardCatalog> GetCardById(int cardId);
+
+		/// <summary>
+		///		Searchs for a card's by it's card name.
+		/// </summary>
+		Task<List<CardCatalog>> SearchByCardName(string query);
 	}
 }
 

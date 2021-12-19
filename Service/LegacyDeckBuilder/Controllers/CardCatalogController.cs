@@ -57,10 +57,19 @@ namespace LegacyDeckBuilder.Controllers
 		}
 
 		/// <summary>
+        ///		Gets a card by it's card Id.
+        /// </summary>
+		[HttpGet, Route("GetCard/{cardId}")]
+		public Task<IActionResult> GetCard(int cardId)
+        {
+			throw new NotImplementedException("To be completed...");
+        }
+
+		/// <summary>
 		///		Queries for a card based on it's card name.
 		/// </summary>
 		[HttpGet, Route("FindCard/{cardName}")]
-		public Task<IActionResult> FindCard(string cardName)
+		public Task<IActionResult> FindCard(string query)
 		{
 			throw new NotImplementedException("To be completed...");
 		}

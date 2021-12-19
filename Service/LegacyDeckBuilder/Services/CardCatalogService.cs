@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LegacyDeckBuilder.Models.Adapter;
@@ -8,7 +9,7 @@ using LegacyDeckBuilder.Repository;
 
 namespace LegacyDeckBuilder.Services
 {
-	public class CardCatalogService: ICardCatalogService
+	public class CardCatalogService : ICardCatalogService
 	{
 		/// <summary>
 		///		Singleton instance of <see cref="ICardCatalogRepository"/> for this class.
@@ -68,12 +69,28 @@ namespace LegacyDeckBuilder.Services
 		{
 			List<CardCatalog> allCardsFromCatalog = await this.CardRepository.GetCatalog();
 
-			if(allCardsFromCatalog == null)
+			if (allCardsFromCatalog == null)
 			{
 				return new List<CardCatalog>();
 			}
 
 			return allCardsFromCatalog;
+		}
+
+		/// <summary>
+		///		Search for a card by it's Id.
+		/// </summary>
+		public async Task<CardCatalog> GetCardById(int cardId)
+		{
+			throw new NotImplementedException("soon...");
+		}
+
+		/// <summary>
+        ///		Searchs for a card's by it's card name.
+        /// </summary>
+		public async Task<List<CardCatalog>> SearchByCardName(string query)
+		{
+			throw new NotImplementedException("soon...");
 		}
 	}
 }
