@@ -51,7 +51,7 @@ namespace LegacyDeckBuilder.Controllers
 		///		Returns all the cards in the card catalog.
 		/// </summary>
 		[HttpGet, Route("FullCatalog")]
-		public Task<IActionResult> GetFullCatalog()
+		public async Task<IActionResult> GetFullCatalog()
 		{
 			throw new NotImplementedException("To be completed...");
 		}
@@ -60,7 +60,7 @@ namespace LegacyDeckBuilder.Controllers
         ///		Gets a card by it's card Id.
         /// </summary>
 		[HttpGet, Route("GetCard/{cardId}")]
-		public Task<IActionResult> GetCard(int cardId)
+		public async Task<IActionResult> GetCard(int cardId)
         {
 			throw new NotImplementedException("To be completed...");
         }
@@ -69,7 +69,7 @@ namespace LegacyDeckBuilder.Controllers
 		///		Queries for a card based on it's card name.
 		/// </summary>
 		[HttpGet, Route("FindCard/{cardName}")]
-		public Task<IActionResult> FindCard(string query)
+		public async Task<IActionResult> FindCard(string query)
 		{
 			throw new NotImplementedException("To be completed...");
 		}

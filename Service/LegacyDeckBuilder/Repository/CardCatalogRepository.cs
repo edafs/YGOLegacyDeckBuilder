@@ -78,9 +78,17 @@ namespace LegacyDeckBuilder.Repository
 		}
 
 		/// <summary>
-		///		Searches for a particular card.
+        ///		Gets a particular card by it's Id.
+        /// </summary>
+		public async Task<CardCatalog> GetCardById(int cardId)
+        {
+			throw new System.NotImplementedException("Soon...");
+        }
+
+		/// <summary>
+		///		Searches for cards through it's name.
 		/// </summary>
-		public List<CardCatalog> SearchForItem()
+		public async Task<List<CardCatalog>> SearchForItem(string query)
 		{
 			throw new System.NotImplementedException("Search For Card Not Yet Implemented.");
 		}

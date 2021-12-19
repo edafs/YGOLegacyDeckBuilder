@@ -23,6 +23,11 @@ namespace LegacyDeckBuilder.Repository
 		Task PurgeDb();
 
 		/// <summary>
+		///		Gets a particular card by it's Id.
+		/// </summary>
+		Task<CardCatalog> GetCardById(int cardId);
+
+		/// <summary>
 		///		Searches for a particular card.
 		/// </summary>
 		List<CardCatalog> SearchForItem();
