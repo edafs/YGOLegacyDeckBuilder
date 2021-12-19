@@ -63,13 +63,13 @@ namespace LegacyDeckBuilder.Repository
 		/// </summary>
 		public async Task PurgeDb()
 		{
-			/*
+            /*
 			 *	TODO:
 			 *	Enumerating over .RemoveRange() is not performant.
 			 *	There are more than 10k cards, which can blowup this EF query.
 			 */
 
-			var allCards = this.Context.CardCatalogs.AsNoTracking();
+            IQueryable<CardCatalog> allCards = this.Context.CardCatalogs.AsNoTracking();
 			if (allCards.Count() != 0)
 			{
 				this.Context.RemoveRange(allCards);
@@ -82,7 +82,15 @@ namespace LegacyDeckBuilder.Repository
         /// </summary>
 		public async Task<CardCatalog> GetCardById(int cardId)
         {
-			throw new System.NotImplementedException("Soon...");
+			if(cardId < 0)
+            {
+				return null;
+            }
+
+            var searchedCard = await this.Context.CardCatalogs.AsNoTracking()
+				.FirstOrDefaultAsync(card => card.CardId == cardId);
+
+			return searchedCard;
         }
 
 		/// <summary>

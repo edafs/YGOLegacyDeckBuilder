@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using LegacyDeckBuilder.Models.Data;
 using LegacyDeckBuilder.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,7 +63,21 @@ namespace LegacyDeckBuilder.Controllers
 		[HttpGet, Route("GetCard/{cardId}")]
 		public async Task<IActionResult> GetCard(int cardId)
         {
-			throw new NotImplementedException("To be completed...");
+			if(cardId < 1)
+            {
+				return StatusCode((int)HttpStatusCode.BadRequest,
+					"Please enter a valid card Id.");
+            }
+
+			CardCatalog card = await this.CardService.GetCardById(cardId);
+
+			if(card == null)
+            {
+				return StatusCode((int)HttpStatusCode.InternalServerError,
+					"Unable to find the queried card.");
+            }
+
+			return Ok(card);
         }
 
 		/// <summary>

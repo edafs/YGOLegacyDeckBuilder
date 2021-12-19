@@ -81,7 +81,8 @@ namespace LegacyDeckBuilder.Services
 		/// </summary>
 		public async Task<CardCatalog> GetCardById(int cardId)
 		{
-			throw new System.NotImplementedException("soon...");
+            CardCatalog card = await this.CardRepository.GetCardById(cardId);
+			return card;
 		}
 
 		/// <summary>
