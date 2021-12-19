@@ -30,6 +30,6 @@ namespace LegacyDeckBuilder.Repository
 		/// <summary>
 		///		Searches for a particular card.
 		/// </summary>
-		List<CardCatalog> SearchForItem();
+		Task<List<CardCatalog>> SearchForItem(string query);
 	}
 }
