@@ -94,13 +94,13 @@ namespace LegacyDeckBuilder.Controllers
 
             List<CardCatalog> searchedCards = await this.CardService.SearchByCardName(cardName);
 
-			if(searchedCards != null || searchedCards.Count > 0)
+			if(searchedCards != null && searchedCards.Count > 0)
             {
 				return Ok(searchedCards);
             }
 
 			return StatusCode((int)HttpStatusCode.NotFound,
-				"Card could not be found.");
+				"No cards could be found.");
 		}
 	}
 }
