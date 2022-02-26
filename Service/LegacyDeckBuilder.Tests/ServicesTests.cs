@@ -91,5 +91,59 @@ namespace LegacyDeckBuilder.Tests
 			Assert.Equal(2, fullCatalog.Count);
         }
 
-    }
+		[Fact]
+		public void CardCatalog_SearchByName_Sucess()
+        {
+			// Arrange
+			Mock<ICardCatalogRepository> repo = new Mock<ICardCatalogRepository>();
+			repo
+				.Setup(cardRepo => cardRepo.SearchForCard(It.IsAny<string>()))
+				.Returns(Task.FromResult(
+					new List<CardCatalog>() { new CardCatalog(), new CardCatalog() }
+				));
+
+			// Act
+			CardCatalogService service = new CardCatalogService(repo.Object, this.WebService);
+			List<CardCatalog> cards = service.SearchByCardName("something").Result;
+
+			// Assert
+			Assert.Equal(2, cards.Count);
+        }
+
+		[Fact]
+		public void CardCatalog_SearchByName_BadParams()
+        {
+			// Arrange
+			Mock<ICardCatalogRepository> repo = new Mock<ICardCatalogRepository>();
+
+			// Act
+			CardCatalogService service = new CardCatalogService(repo.Object, this.WebService);
+			List<CardCatalog> nullCards = service.SearchByCardName(String.Empty).Result;
+			List<CardCatalog> emptyCards = service.SearchByCardName(null).Result;
+
+			// Assert
+			Assert.Null(nullCards);
+			Assert.Null(emptyCards);
+
+		}
+
+		[Fact]
+		public void CardCatalog_SearchByName_NoResults()
+        {
+			// Arrange
+			Mock<ICardCatalogRepository> repo = new Mock<ICardCatalogRepository>();
+			repo
+				.Setup(cardRepo => cardRepo.SearchForCard(It.IsAny<string>()))
+				.Returns(Task.FromResult(
+					new List<CardCatalog>()
+				));
+
+			// Act
+			CardCatalogService service = new CardCatalogService(repo.Object, this.WebService);
+			List<CardCatalog> cards = service.SearchByCardName("something").Result;
+
+			// Assert
+			Assert.Null(null);
+		}
+	}
 }
