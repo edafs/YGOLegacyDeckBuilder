@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using LegacyDeckBuilder.Models.Data;
 using LegacyDeckBuilder.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,18 +52,55 @@ namespace LegacyDeckBuilder.Controllers
 		///		Returns all the cards in the card catalog.
 		/// </summary>
 		[HttpGet, Route("FullCatalog")]
-		public Task<IActionResult> GetFullCatalog()
+		public async Task<IActionResult> GetFullCatalog()
 		{
 			throw new NotImplementedException("To be completed...");
 		}
 
 		/// <summary>
+        ///		Gets a card by it's card Id.
+        /// </summary>
+		[HttpGet, Route("GetCard/{cardId}")]
+		public async Task<IActionResult> GetCard(int cardId)
+        {
+			if(cardId < 1)
+            {
+				return StatusCode((int)HttpStatusCode.BadRequest,
+					"Please enter a valid card Id.");
+            }
+
+			CardCatalog card = await this.CardService.GetCardById(cardId);
+
+			if(card == null)
+            {
+				return StatusCode((int)HttpStatusCode.InternalServerError,
+					"Unable to find the queried card.");
+            }
+
+			return Ok(card);
+        }
+
+		/// <summary>
 		///		Queries for a card based on it's card name.
 		/// </summary>
 		[HttpGet, Route("FindCard/{cardName}")]
-		public Task<IActionResult> FindCard(string cardName)
+		public async Task<IActionResult> FindCard(string cardName)
 		{
-			throw new NotImplementedException("To be completed...");
+			if(string.IsNullOrWhiteSpace(cardName))
+            {
+				return StatusCode((int)HttpStatusCode.BadRequest,
+					"Enter a valid search.");
+            }
+
+            List<CardCatalog> searchedCards = await this.CardService.SearchByCardName(cardName);
+
+			if(searchedCards != null && searchedCards.Count > 0)
+            {
+				return Ok(searchedCards);
+            }
+
+			return StatusCode((int)HttpStatusCode.NotFound,
+				"No cards could be found.");
 		}
 	}
 }

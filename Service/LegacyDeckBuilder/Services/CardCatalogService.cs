@@ -8,7 +8,7 @@ using LegacyDeckBuilder.Repository;
 
 namespace LegacyDeckBuilder.Services
 {
-	public class CardCatalogService: ICardCatalogService
+    public class CardCatalogService : ICardCatalogService
 	{
 		/// <summary>
 		///		Singleton instance of <see cref="ICardCatalogRepository"/> for this class.
@@ -68,12 +68,41 @@ namespace LegacyDeckBuilder.Services
 		{
 			List<CardCatalog> allCardsFromCatalog = await this.CardRepository.GetCatalog();
 
-			if(allCardsFromCatalog == null)
+			if (allCardsFromCatalog == null)
 			{
 				return new List<CardCatalog>();
 			}
 
 			return allCardsFromCatalog;
+		}
+
+		/// <summary>
+		///		Search for a card by it's Id.
+		/// </summary>
+		public async Task<CardCatalog> GetCardById(int cardId)
+		{
+            CardCatalog card = await this.CardRepository.GetCardById(cardId);
+			return card;
+		}
+
+		/// <summary>
+        ///		Searchs for a card's by it's card name.
+        /// </summary>
+		public async Task<List<CardCatalog>> SearchByCardName(string query)
+		{
+            if (string.IsNullOrWhiteSpace(query))
+            {
+				return null;
+            }
+
+            List<CardCatalog> cardList = await this.CardRepository.SearchForCard(query);
+
+			if (cardList != null && cardList.Count > 0)
+            {
+				return cardList;
+            }
+
+			return null;
 		}
 	}
 }

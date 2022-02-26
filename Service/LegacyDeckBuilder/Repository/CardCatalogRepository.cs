@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LegacyDeckBuilder.Models;
@@ -63,13 +64,13 @@ namespace LegacyDeckBuilder.Repository
 		/// </summary>
 		public async Task PurgeDb()
 		{
-			/*
+            /*
 			 *	TODO:
 			 *	Enumerating over .RemoveRange() is not performant.
 			 *	There are more than 10k cards, which can blowup this EF query.
 			 */
 
-			var allCards = this.Context.CardCatalogs.AsNoTracking();
+            IQueryable<CardCatalog> allCards = this.Context.CardCatalogs.AsNoTracking();
 			if (allCards.Count() != 0)
 			{
 				this.Context.RemoveRange(allCards);
@@ -78,11 +79,41 @@ namespace LegacyDeckBuilder.Repository
 		}
 
 		/// <summary>
-		///		Searches for a particular card.
+        ///		Gets a particular card by it's Id.
+        /// </summary>
+		public async Task<CardCatalog> GetCardById(int cardId)
+        {
+			if(cardId < 0)
+            {
+				return null;
+            }
+
+            CardCatalog searchedCard = await this.Context.CardCatalogs.AsNoTracking()
+				.FirstOrDefaultAsync(card => card.CardId == cardId);
+
+			return searchedCard;
+        }
+
+		/// <summary>
+		///		Searches for cards through it's name.
 		/// </summary>
-		public List<CardCatalog> SearchForItem()
+		public async Task<List<CardCatalog>> SearchForCard(string cardQuery)
 		{
-			throw new System.NotImplementedException("Search For Card Not Yet Implemented.");
+            if (string.IsNullOrWhiteSpace(cardQuery))
+            {
+				return null;
+            }
+
+			List<CardCatalog> searchedCards = await this.Context.CardCatalogs.AsNoTracking()
+				.Where(cards => cards.CardName.Contains(cardQuery))
+				.ToListAsync();
+
+			if (searchedCards != null && searchedCards.Count() > 0)
+			{
+				return searchedCards;
+			}
+
+			return null;
 		}
 
 	}
