@@ -84,9 +84,23 @@ namespace LegacyDeckBuilder.Controllers
 		///		Queries for a card based on it's card name.
 		/// </summary>
 		[HttpGet, Route("FindCard/{cardName}")]
-		public async Task<IActionResult> FindCard(string query)
+		public async Task<IActionResult> FindCard(string cardName)
 		{
-			throw new NotImplementedException("To be completed...");
+			if(string.IsNullOrWhiteSpace(cardName))
+            {
+				return StatusCode((int)HttpStatusCode.BadRequest,
+					"Enter a valid search.");
+            }
+
+            List<CardCatalog> searchedCards = await this.CardService.SearchByCardName(cardName);
+
+			if(searchedCards != null || searchedCards.Count > 0)
+            {
+				return Ok(searchedCards);
+            }
+
+			return StatusCode((int)HttpStatusCode.NotFound,
+				"Card could not be found.");
 		}
 	}
 }

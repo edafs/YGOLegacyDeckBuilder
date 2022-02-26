@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LegacyDeckBuilder.Models;
@@ -87,7 +88,7 @@ namespace LegacyDeckBuilder.Repository
 				return null;
             }
 
-            var searchedCard = await this.Context.CardCatalogs.AsNoTracking()
+            CardCatalog searchedCard = await this.Context.CardCatalogs.AsNoTracking()
 				.FirstOrDefaultAsync(card => card.CardId == cardId);
 
 			return searchedCard;
@@ -96,9 +97,23 @@ namespace LegacyDeckBuilder.Repository
 		/// <summary>
 		///		Searches for cards through it's name.
 		/// </summary>
-		public async Task<List<CardCatalog>> SearchForItem(string query)
+		public async Task<List<CardCatalog>> SearchForCard(string cardQuery)
 		{
-			throw new System.NotImplementedException("Search For Card Not Yet Implemented.");
+            if (string.IsNullOrWhiteSpace(cardQuery))
+            {
+				return null;
+            }
+
+			List<CardCatalog> searchedCards = await this.Context.CardCatalogs.AsNoTracking()
+				.Where(cards => cards.CardName.Contains(cardQuery))
+				.ToListAsync();
+
+			if (searchedCards != null && searchedCards.Count() > 0)
+			{
+				return searchedCards;
+			}
+
+			return null;
 		}
 
 	}

@@ -90,7 +90,19 @@ namespace LegacyDeckBuilder.Services
         /// </summary>
 		public async Task<List<CardCatalog>> SearchByCardName(string query)
 		{
-			throw new System.NotImplementedException("soon...");
+            if (string.IsNullOrWhiteSpace(query))
+            {
+				return null;
+            }
+
+            List<CardCatalog> cardList = await this.CardRepository.SearchForCard(query);
+
+			if (cardList != null && cardList.Count > 0)
+            {
+				return cardList;
+            }
+
+			return null;
 		}
 	}
 }
